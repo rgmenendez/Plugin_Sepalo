@@ -1,6 +1,7 @@
-﻿# cordova-plugin-template
+﻿# cordova-plugin-sepalo
 
-This is my personal [Apache Cordova](https://cordova.apache.org) plugin template containing examples for Android and iOS. It simply provides an *echo(..)* method that returns the passed value.
+Plugin personal para utilizar lector de tarjetas y librería de Sepalo en OBTABLET. Se basa en plugin-template y tiene método "echo(..)" para probar que devuelve el mensaje pasado.
+
 
 
 ## Getting started
