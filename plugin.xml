@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-sepalo" version="0.0.0">
+  <name>Sepalo</name>
+  <description>Cordova Plugin Sepalo</description>
+  <license>Apache 2.0</license>
+  <keywords>cordova, plugin, sepalo</keywords>
+
+  <js-module src="www/sepalo.js" name="sepalo">
+    <clobbers target="navigator.sepalo" />
+  </js-module>
+
+  <!-- android -->
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Sepalo" >
+        <param name="android-package" value="cordova.plugin.Sepalo"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest">      
+      <uses-permission android:name="android.permission.BLUETOOTH"/>      
+      <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+      <uses-permission android:name="android.permission.INTERNET"/>
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>      
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">      
+      <activity android:name="com.alsa.alsaopprivlib.BluetoothReader"  
+            android:label="@string/app_name"                                  
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity android:name="com.alsa.alsaopprivlib.NfcReader"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>                  
+        <receiver android:name="com.alsa.alsaopprivlib.receiver.BluetoothReceiver" >
+            <intent-filter>
+				        <action android:name="android.bluetooth.device.action.ACL_CONNECTED"></action>
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED"></action>
+            </intent-filter>
+        </receiver>			
+        <receiver android:name="com.alsa.alsaopprivlib.receiver.PairingServiceReceiver" >
+            <intent-filter>
+            	<action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+        		  <category android:name="android.intent.category.DEFAULT"/>
+        		  <data android:mimeType="text/plain" />            
+            </intent-filter>
+        </receiver>	
+    </config-file>
+
+    <source-file src="src/android/Sepalo.java" target-dir="src/cordova/plugin" />
+    <source-file src="src/android/StartActivity.java" target-dir="src/cordova/plugin" />
+    <lib-file src="src/android/libs/alsaopprivlib.jar"/>
+    <lib-file src="src/android/libs/bR301_v2.0.4_release.jar"/>    
+
+  </platform>
+
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="Sepalo">
+        <param name="ios-package" value="CPSepalo" />
+      </feature>
+    </config-file>
+    <header-file src="src/ios/CPSepalo.h" />
+    <source-file src="src/ios/CPSepalo.m" />
+  </platform>
+
+</plugin>
